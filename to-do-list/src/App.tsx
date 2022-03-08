@@ -23,15 +23,15 @@ function App() {
     setShowModel(false)
   }
   return (
-    <>
+    <div>
       <Header/>
       {showModel&&<Model/>}
-      <div className={styles.main}>
+      <main className={styles.main}>
         <FormToDo taskList={taskList} setTaskList={setTaskList} btnText="Criar tarefa"/>
         <ListToDo taskList={taskList} taskDeleted={taskDeleted} taskEdit={taskEdit} />
-      </div>
+      </main>
       <Footer/>
-    </>
+    </div>
   );
 }
 

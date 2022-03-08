@@ -1,8 +1,6 @@
 .header{
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: #282c34;
-    color:#fff;
+    color: #61dafb;
+    text-align: center;
+    padding: 1em;
 }

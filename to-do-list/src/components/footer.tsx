@@ -1,9 +1,9 @@
 import styles from "./Footer.module.css"
 function Footer(){
     return (
-        <div className={styles.footer}>
-            <p>to do list <span>@2022</span></p>
-        </div>
+        <footer className={styles.footer}>
+            <p> <span>React + TS Todo</span> @2022</p>
+        </footer>
     )
 }
 export default Footer
