@@ -3,8 +3,9 @@ import { Itask } from "../Interfaces/Itask"
 interface Props{
     taskList:Itask[],
     taskDeleted(id:number):void
+    taskEdit(id:number,name:string,difficulty:number):void
 }
-function ListToDo({taskList,taskDeleted}:Props) {
+function ListToDo({taskList,taskDeleted,taskEdit}:Props) {
     return (
         <>
             {taskList.map((task)=>(
@@ -16,7 +17,7 @@ function ListToDo({taskList,taskDeleted}:Props) {
                     </div>
                     <div>
                         <i onClick={()=>{taskDeleted(task.id)}} className="bi bi-trash"></i>
-                        <i className="bi bi-pencil"></i>
+                        <i onClick={()=>{taskEdit(task.id,task.name,task.difficulty)}} className="bi bi-pencil"></i>
                     </div>
                 </div>
             ))}

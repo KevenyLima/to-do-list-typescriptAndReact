@@ -2,23 +2,35 @@ import React from 'react';
 import FormToDo from './components/FormToDo'
 import ListToDo from './components/ListToDo'
 import { Itask } from './Interfaces/Itask';
-import {useState} from 'react'
+import { useState } from 'react'
+import Model from './components/model';
+import Footer from './components/footer';
+import Header from './components/Header';
+import styles from './app.module.css'
 function App() {
-  const [taskList,setTaskList] = useState<Itask[]>([])
+  const [taskList, setTaskList] = useState<Itask[]>([])
+  const [showModel, setShowModel] = useState<boolean>(false)
 
-  function createTask(name:string,difficulty:number){
-    const id = Math.random()*1000
-    const newtTask = {'name':name,'difficulty':difficulty,'id':id}
-    setTaskList([...taskList,newtTask])
+  function taskDeleted(id: number) {
+    setTaskList(taskList.filter((task) => task.id !== id))
   }
-function taskDeleted(id:number){
-  setTaskList(taskList.filter((task)=>task.id!==id))
-}
-
+  function taskEdit(id: number,name:string,difficulty:number) {
+    const taskUpdate={'id':id,'name':name,'difficulty':difficulty}
+    const updateItems = taskList.map((task)=>{
+      return task.id===taskUpdate.id?taskUpdate:task
+    })
+    setTaskList(updateItems)
+    setShowModel(false)
+  }
   return (
     <>
-      <FormToDo taskList={taskList} createTask={createTask}/>
-      <ListToDo taskList={taskList} taskDeleted={taskDeleted}/>
+      <Header/>
+      {showModel&&<Model/>}
+      <div className={styles.main}>
+        <FormToDo taskList={taskList} setTaskList={setTaskList} btnText="Criar tarefa"/>
+        <ListToDo taskList={taskList} taskDeleted={taskDeleted} taskEdit={taskEdit} />
+      </div>
+      <Footer/>
     </>
   );
 }
