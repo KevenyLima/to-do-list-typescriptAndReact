@@ -2,10 +2,11 @@ import { Itask } from "../Interfaces/Itask"
 import styles from "./ListToDo.module.css"
 interface Props{
     taskList:Itask[],
-    taskDeleted(id:number):void
-    taskEdit(id:number,name:string,difficulty:number):void
+    handleDelete(id:number):void
+    handleEdit(task:Itask):void
+    
 }
-function ListToDo({taskList,taskDeleted,taskEdit}:Props) {
+function ListToDo({taskList,handleDelete,handleEdit}:Props) {
     return (
         <>
             {taskList.map((task)=>(
@@ -15,8 +16,8 @@ function ListToDo({taskList,taskDeleted,taskEdit}:Props) {
                         <p>Dificuldade: {task.difficulty}</p>
                     </div>
                     <div className={styles.actions}>
-                        <i onClick={()=>{taskDeleted(task.id)}} className="bi bi-trash"></i>
-                        <i onClick={()=>{taskEdit(task.id,task.name,task.difficulty)}} className="bi bi-pencil"></i>
+                        <i onClick={()=>{handleDelete(task.id)}} className="bi bi-trash"></i>
+                        <i onClick={()=>{handleEdit(task)}} className="bi bi-pencil"></i>
                     </div>
                 </div>
             ))}

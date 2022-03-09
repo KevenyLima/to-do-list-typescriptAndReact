@@ -5,25 +5,34 @@ interface Props {
     taskList?: Itask[],
     setTaskList?: React.Dispatch<React.SetStateAction<Itask[]>>,
     btnText: string,
-    task?: Itask | null
+    task?: Itask | null,
+    handleUpdate?(id:number,taskName:string,taskDifficulty:number):void
 }
-function FormToDo({ taskList, setTaskList, btnText, task }: Props) {
+function FormToDo({ taskList, setTaskList, btnText, task ,handleUpdate}: Props) {
     const [taskName, setTaskName] = useState<string>('')
     const [taskDifficulty, setTaskDifficulty] = useState<number>(0)
-    const [taskUpDated, setTaskUpDated] = useState<Itask[] | null>(null)
+    const [id,setId]= useState<number>(0)
 
-    function CreateTask(name: string, difficulty: number) {
-        const id = Math.random() * 1000
-        const newtTask = { 'name': name, 'difficulty': difficulty, 'id': id }
-        setTaskList!([...taskList!, newtTask])
-    }
+    useEffect(()=>{
+        if(task){
+            setId(task.id)
+            setTaskName(task.name)
+            setTaskDifficulty(task.difficulty)
+        }
+    },[task])
 
-    const creatAndUpDateTask = (e: FormEvent<HTMLFormElement>) => {
+    function addTaskHandle(e:FormEvent<HTMLFormElement>){
         e.preventDefault()
-        if (typeof setTaskList !== 'undefined') {
-            CreateTask(taskName, taskDifficulty)
-        } else {
-
+        if(taskList){
+            if(handleUpdate){
+                handleUpdate(id,taskName,taskDifficulty)
+            }else{
+                const id= Math.floor(Math.random()*1000)
+                const newtask:Itask = { 'name': taskName, 'difficulty': taskDifficulty, 'id': id }
+                setTaskList!([...taskList,newtask])
+                setTaskName('')
+                setTaskDifficulty(0)
+            }
         }
     }
     const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,14 +43,14 @@ function FormToDo({ taskList, setTaskList, btnText, task }: Props) {
     }
     return (
 
-        <form onSubmit={creatAndUpDateTask}  className={styles.form}>
+        <form onSubmit={addTaskHandle}  className={styles.form}>
             <div className={styles.input_container}>
                 <label htmlFor="name">nome</label>
-                <input onChange={handleChangeName} name='name' type="text" placeholder="nome da tarefa" />
+                <input onChange={handleChangeName} name='name' type="text" placeholder="nome da tarefa" value={taskName} />
             </div>
             <div className={styles.input_container}>
                 <label htmlFor="difficulty">dificuldade</label>
-                <input onChange={handleChangeDifficulty} name='difficulty' type="number" placeholder="dificuldade" />
+                <input onChange={handleChangeDifficulty} name='difficulty' type="number" placeholder="dificuldade" value={taskDifficulty} />
             </div>
             <input type='submit' value={btnText}/>
         </form>

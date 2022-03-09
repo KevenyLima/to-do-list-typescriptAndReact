@@ -1,14 +1,22 @@
-import FormToDo from "./FormToDo"
 import styles from "./Modal.module.css"
-function Modal() {
+import React from "react"
+interface Props {
+    title:string
+    children:React.ReactNode
+}
+function Modal({title,children}:Props) {
+    const closeModal= (e:React.MouseEvent):void=>{
+        const modal= document.getElementById('modal')
+        modal!.classList.add('hide')
+    }
     return (
-        <>
-            <div className={styles.fade}></div>
+        <div id='modal' className="hide">
+            <div className={styles.fade} onClick={closeModal}></div>
             <div className={styles.modal}>
-                <h1>Editar Tarefa</h1>
-                <FormToDo btnText="salvar" />
+                <h2>{title}</h2>
+                {children}
             </div>
-        </>
+        </div>
     )
 }
 export default Modal
