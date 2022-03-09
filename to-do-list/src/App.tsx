@@ -1,12 +1,12 @@
 import React from 'react';
 import FormToDo from './components/FormToDo'
 import ListToDo from './components/ListToDo'
-import { Itask } from './Interfaces/Itask';
 import { useState } from 'react'
-import Modal from './components/Modal';
-import Footer from './components/footer';
-import Header from './components/Header';
+import Modal from './components/Modal'
+import Footer from './components/footer'
+import Header from './components/Header'
 import styles from './app.module.css'
+import { Itask } from './Interfaces/Itask';
 function App() {
   const [taskList, setTaskList] = useState<Itask[]>([])
   const [taskUptodate,setTaskUptodate] = useState<Itask|null>()
