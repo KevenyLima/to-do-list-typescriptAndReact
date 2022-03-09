@@ -3,13 +3,13 @@ import FormToDo from './components/FormToDo'
 import ListToDo from './components/ListToDo'
 import { Itask } from './Interfaces/Itask';
 import { useState } from 'react'
-import Model from './components/model';
+import Model from './components/Modal';
 import Footer from './components/footer';
 import Header from './components/Header';
 import styles from './app.module.css'
 function App() {
   const [taskList, setTaskList] = useState<Itask[]>([])
-  const [showModel, setShowModel] = useState<boolean>(false)
+  const [showModel, setShowModel] = useState<boolean>(true)
 
   function taskDeleted(id: number) {
     setTaskList(taskList.filter((task) => task.id !== id))
